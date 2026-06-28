@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Танцующие котики 🐱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
+            background-size: 400% 400%;
+            animation: rainbow 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 40px 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3), inset 0 0 100px rgba(255,255,255,0.1);
+            border: 3px solid rgba(255,255,255,0.3);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3rem;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5), 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        /* Котики */
+        .cats-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0 30px;
+            min-height: 200px;
+        }
+        .cat {
+            font-size: 6rem;
+            display: inline-block;
+            animation: dance 0.8s ease-in-out infinite alternate;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .cat:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        .cat:nth-child(1) { animation-delay: 0s; }
+        .cat:nth-child(2) { animation-delay: 0.1s; }
+        .cat:nth-child(3) { animation-delay: 0.2s; }
+        .cat:nth-child(4) { animation-delay: 0.3s; }
+        .cat:nth-child(5) { animation-delay: 0.4s; }
+        .cat:nth-child(6) { animation-delay: 0.15s; }
+        .cat:nth-child(7) { animation-delay: 0.25s; }
+        .cat:nth-child(8) { animation-delay: 0.35s; }
+
+        @keyframes dance {
+            0% { transform: translateY(0px) rotate(-5deg) scale(1); }
+            100% { transform: translateY(-25px) rotate(5deg) scale(1.05); }
+        }
+
+        /* Музыкальный плеер */
+        .music-player {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 15px 25px;
+            margin: 10px 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .music-player button {
+            background: rgba(255,255,255,0.25);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255,255,255,0.1);
+            min-width: 100px;
+        }
+        .music-player button:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+        .music-player button:active {
+            transform: scale(0.95);
+        }
+        .music-player .now-playing {
+            color: #fff;
+            font-size: 1.1rem;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            padding: 5px 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 30px;
+            min-width: 150px;
+        }
+        .music-player .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .music-player .volume {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        .music-player .volume input {
+            width: 80px;
+            accent-color: #ffd93d;
+            cursor: pointer;
+        }
+
+        /* Танцующие звёздочки */
+        .sparkles {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .sparkle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: sparkleFloat 4s linear forwards;
+        }
+        @keyframes sparkleFloat {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-200px) scale(0); }
+        }
+
+        /* Эмодзи-реакции */
+        .emoji-rain {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            z-index: 1;
+            animation: emojiFall 3s linear forwards;
+        }
+        @keyframes emojiFall {
+            0% { opacity: 1; transform: translateY(-50px) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
+        }
+
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .container { padding: 25px; border-radius: 40px; }
+            h1 { font-size: 2rem; }
+            .cat { font-size: 4rem; }
+            .cats-container { gap: 15px; }
+            .music-player { flex-direction: column; padding: 15px; }
+            .music-player .controls { flex-wrap: wrap; justify-content: center; }
+            .music-player button { padding: 10px 18px; font-size: 1rem; min-width: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Контейнер -->
+<div class="container">
+    <h1>🐱 Танцующие котики 🐱</h1>
+    <p class="subtitle">🎵 Нажми на котика — он мяукнет! 🎵</p>
+
+    <!-- Котики -->
+    <div class="cats-container" id="catsContainer">
+        <span class="cat" data-sound="meow1">🐱</span>
+        <span class="cat" data-sound="meow2">😺</span>
+        <span class="cat" data-sound="meow3">😸</span>
+        <span class="cat" data-sound="meow1">😻</span>
+        <span class="cat" data-sound="meow2">🙀</span>
+        <span class="cat" data-sound="meow3">😹</span>
+        <span class="cat" data-sound="meow1">🐈</span>
+        <span class="cat" data-sound="meow2">🐈‍⬛</span>
+    </div>
+
+    <!-- Музыкальный плеер -->
+    <div class="music-player">
+        <div class="now-playing" id="nowPlaying">🎵 Весёлая песенка</div>
+        <div class="controls">
+            <button id="playBtn">▶️</button>
+            <button id="prevBtn">⏮️</button>
+            <button id="nextBtn">⏭️</button>
+            <button id="randomBtn">🎲</button>
+        </div>
+        <div class="volume">
+            <span>🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="100" value="70">
+        </div>
+    </div>
+</div>
+
+<script>
+// =============================================================
+// 1. МУЗЫКАЛЬНЫЙ ПЛЕЕР
+// =============================================================
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+// Список песен (генерируем через Web Audio)
+const songs = [
+    { name: '🎵 Весёлая песенка', notes: [523, 587, 659, 784, 880, 784, 659, 587, 523] },
+    { name: '🎵 Котик-рок', notes: [440, 494, 523, 587, 659, 587, 523, 494, 440] },
+    { name: '🎵 Радужный вальс', notes: [392, 440, 494, 523, 587, 659, 784, 880] },
+    { name: '🎵 Мяу-мелодия', notes: [330, 392, 440, 523, 587, 659, 784, 880, 784, 659] },
+    { name: '🎵 Счастливый кот', notes: [262, 294, 330, 392, 440, 494, 523, 587, 659] },
+    { name: '🎵 Танцевальный микс', notes: [523, 659, 784, 880, 988, 880, 784, 659, 523] },
+    { name: '🎵 Летний бриз', notes: [392, 494, 587, 659, 784, 659, 587, 494, 392] },
+    { name: '🎵 Котячий рэп', notes: [440, 523, 587, 659, 523, 587, 659, 784, 880] },
+];
+
+let currentSongIndex = 0;
+let isPlaying = false;
+let currentNotes = [];
+let noteIndex = 0;
+let tempo = 250; // ms между нотами
+let musicInterval = null;
+let volume = 0.7;
+
+// Функция для воспроизведения ноты
+function playNote(freq, duration = 0.15, vol = volume) {
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol * 0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
+}
+
+// Воспроизведение песни
+function playSong(index) {
+    stopMusic();
+    const song = songs[index % songs.length];
+    currentNotes = song.notes;
+    noteIndex = 0;
+    document.getElementById('nowPlaying').textContent = song.name;
+    currentSongIndex = index;
+    isPlaying = true;
+    document.getElementById('playBtn').textContent = '⏸️';
+    playNextNote();
+}
+
+function playNextNote() {
+    if (!isPlaying || noteIndex >= currentNotes.length) {
+        // Зацикливаем
+        if (isPlaying) {
+            noteIndex = 0;
+            setTimeout(playNextNote, 500);
+        }
+        return;
+    }
+    playNote(currentNotes[noteIndex], 0.15);
+    noteIndex++;
+    musicInterval = setTimeout(playNextNote, tempo);
+}
+
+function stopMusic() {
+    isPlaying = false;
+    if (musicInterval) {
+        clearTimeout(musicInterval);
+        musicInterval = null;
+    }
+    document.getElementById('playBtn').textContent = '▶️';
+}
+
+function togglePlay() {
+    if (isPlaying) {
+        stopMusic();
+    } else {
+        playSong(currentSongIndex);
+    }
+}
+
+function nextSong() {
+    stopMusic();
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    playSong(currentSongIndex);
+}
+
+function prevSong() {
+    stopMusic();
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    playSong(currentSongIndex);
+}
+
+function randomSong() {
+    stopMusic();
+    currentSongIndex = Math.floor(Math.random() * songs.length);
+    playSong(currentSongIndex);
+}
+
+// Управление громкостью
+document.getElementById('volumeSlider').addEventListener('input', function() {
+    volume = this.value / 100;
+});
+
+// Кнопки управления
+document.getElementById('playBtn').addEventListener('click', togglePlay);
+document.getElementById('nextBtn').addEventListener('click', nextSong);
+document.getElementById('prevBtn').addEventListener('click', prevSong);
+document.getElementById('randomBtn').addEventListener('click', randomSong);
+
+// Автозапуск
+setTimeout(() => {
+    playSong(0);
+}, 500);
+
+// =============================================================
+// 2. КОТИКИ: МЯУКАНЬЕ
+// =============================================================
+document.querySelectorAll('.cat').forEach(cat => {
+    cat.addEventListener('click', function(e) {
+        // Мяу
+        const freq = 300 + Math.random() * 800;
+        playNote(freq, 0.2, 0.5);
+        
+        // Дополнительный эффект
+        this.style.transform = 'scale(1.5) rotate(20deg)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // Эмодзи-дождь
+        createEmojiRain(e.clientX || e.pageX, e.clientY || e.pageY);
+        
+        // Звёздочки
+        createSparkles(e.clientX || e.pageX, e.clientY || e.pageY);
+    });
+});
+
+// =============================================================
+// 3. ЭМОДЗИ-ДОЖДЬ
+// =============================================================
+function createEmojiRain(x, y) {
+    const emojis = ['⭐', '🌟', '✨', '🌈', '🎵', '🎶', '💖', '❤️', '🌈', '🎉', '🎊'];
+    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const el = document.createElement('div');
+    el.className = 'emoji-rain';
+    el.textContent = emoji;
+    el.style.left = (x - 30 + Math.random() * 60) + 'px';
+    el.style.top = (y - 30 + Math.random() * 60) + 'px';
+    el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+}
+
+// =============================================================
+// 4. ЗВЁЗДОЧКИ
+// =============================================================
+function createSparkles(x, y) {
+    for (let i = 0; i < 8; i++) {
+        const el = document.createElement('div');
+        el.className = 'sparkle';
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 30 + Math.random() * 80;
+        el.style.left = (x + Math.cos(angle) * dist) + 'px';
+        el.style.top = (y + Math.sin(angle) * dist) + 'px';
+        el.style.width = (4 + Math.random() * 8) + 'px';
+        el.style.height = el.style.width;
+        el.style.background = ['#ffd93d', '#ff6b6b', '#6bcb77', '#4d96ff', '#ff6bff', '#fff'][Math.floor(Math.random() * 6)];
+        el.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+    }
+}
+
+// =============================================================
+// 5. ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ
+// =============================================================
+// Автоматические звёздочки
+setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    createSparkles(x, y);
+}, 500);
+
+// Автоматические эмодзи
+setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    createEmojiRain(x, y);
+}, 2000);
+
+// =============================================================
+// 6. ПАСХАЛКИ
+// =============================================================
+// Секретный код: MEOW
+let secretCode = '';
+document.addEventListener('keydown', function(e) {
+    secretCode += e.key.toUpperCase();
+    if (secretCode.includes('MEOW')) {
+        // Взрыв котиков
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                createEmojiRain(x, y);
+                createSparkles(x, y);
+            }, i * 50);
+        }
+        document.querySelectorAll('.cat').forEach((cat, i) => {
+            setTimeout(() => {
+                cat.style.transform = 'scale(2) rotate(360deg)';
+                setTimeout(() => cat.style.transform = '', 500);
+            }, i * 100);
+        });
+        secretCode = '';
+    }
+    if (secretCode.length > 10) secretCode = '';
+});
+
+// Клик на заголовок
+document.querySelector('h1').addEventListener('dblclick', function() {
+    // Смена цвета фона
+    document.body.style.background = 'linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6)';
+    document.body.style.backgroundSize = '400% 400%';
+    // Взрыв эмодзи
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            createEmojiRain(x, y);
+        }, i * 50);
+    }
+});
+
+// Клик на плеер
+document.querySelector('.music-player').addEventListener('dblclick', function() {
+    // Смена темпа
+    if (tempo === 250) {
+        tempo = 150;
+        document.querySelector('.now-playing').textContent = '⚡ УСКОРЕННО! ⚡';
+    } else if (tempo === 150) {
+        tempo = 400;
+        document.querySelector('.now-playing').textContent = '🐢 МЕДЛЕННО...';
+    } else {
+        tempo = 250;
+        document.querySelector('.now-playing').textContent = songs[currentSongIndex].name;
+    }
+    // Перезапускаем
+    if (isPlaying) {
+        stopMusic();
+        playSong(currentSongIndex);
+    }
+});
+
+console.log('🐱 Добро пожаловать в мир танцующих котиков!');
+console.log('💡 Нажми на котика — он мяукнет!');
+console.log('🔑 Секретный код: MEOW (набери на клавиатуре)');
+</script>
+</body>
+  </html>
